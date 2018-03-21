@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register Center</title>
+    <link rel='stylesheet' href='stylesheets/style.css'  />
+</head>
+<style type="text/css">
+	body {
+		background: #F6F6F6;
+		margin: 0px;
+		height: 100%;
+	}	
+	aside {
+		background: #8A8A8A;
+		float: left;
+		width: 13%;
+		height: 1013px;
+	}
+
+	#welcome{
+		margin: 27%;
+		text-align: center;	
+		font-size: 1em;
+	}
+
+	article{
+		float: left;
+		width: 60%;
+		margin-left: 20%;
+		margin-top: 5%;
+	}
+
+	#button{
+		margin-left: 25%;
+		margin-top: 5%; 
+
+	}
+	
+</style>
+<body>
+<aside class="sidebar">
+	<div id="welcome">
+		<h3>환영합니다!</h3>
+		<input type="button" id="logout" value="로그아웃" onClick="location.href='/register/center'"></input><p>	<!-- 라우팅 처리 안함 -->
+		<input type="button" id="mypage" value="마이페이지" onClick="location.href='/register/choice'"></input><p>	<!-- 라우팅 처리 안함 -->
+	</div>
+</aside>
+
+<article>
+	<h1>기관 세부정보 입력</h1>
+	<form action='/register/center' method="post"> 
+		<input type='text' name='id' placeholder="기관ID"><p>
+		<input type='text' name='password' placeholder="PASSWORD"><p>
+		<input type='text' name='centername' placeholder="기관명"><p>
+		<input type='text' name='name' placeholder="기관이름"><p>
+		<input type='text' name='address' placeholder="주소"><p>
+		<input type='text' name='manager' placeholder="기관담당자"><p>
+		<input type='text' name='email' placeholder="이메일"><p>
+		<input type='text' name='phone' placeholder="핸드폰번호"><p>	
+		<!-- onClick : no -->
+		<!-- <input type='submit' onClick="location.href='/list/center'"> -->
+		<input type='submit'>
+	</form>
+</article>		
+</body>
+</html>

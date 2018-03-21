@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register Class</title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+</head>
+<body>
+
+<aside class="sidebar">
+	<div id="welcome">
+		<h3>환영합니다!</h3>
+		<input type="button" id="logout" value="로그아웃" onClick="location.href='/register/center'"></input><p>	<!-- 라우팅 처리 안함 -->
+		<input type="button" id="mypage" value="마이페이지" onClick="location.href='/register/choice'"></input><p>	<!-- 라우팅 처리 안함 -->
+	</div>
+</aside>
+
+<article>
+		
+
+
+	<h1>개설과목 세부정보 입력</h1>
+	<form method="post" action="/register/choice2/:id/<%=dept%>">
+	
+	<p><input type="text" name="cid" placeholder="과목ID"></p>
+	<p><input type="text" name="ctime" placeholder="과목차수"></p>
+	<select name="tid">
+		<option value="">강사선택</option>
+		<% for(var i=0;i<rows2.length;i++){
+		var tid = rows2[i].강사ID;
+		var tname = rows2[i].이름;
+		%>
+		<option value="<%=tid%>"><%=tname%> (<%=tid%>)</option>
+		<% } %>
+	</select>
+	<p><input type="text" name="cnumber" placeholder="개설인원"></p>
+	<p><input type="date" name="cstart" placeholder="강의시작일"></p>
+	<p><input type="date" name="cend" placeholder="강의종료일"></p>
+	<p><input type="text" name="copen" placeholder="현재개설여부"></p>
+	<p><input type="text" name="cstatus" placeholder="과목현황"></p>
+	<p><input type="text" name="cname" placeholder="과목명"></p>
+	<!-- <p><input type="text" name="did" placeholder="학과ID"></p> -->
+	<p><input type="text" name="cregist" placeholder="등록여부"></p>
+	<p><input type="submit">
+
+	
+
+	</form>
+</article>
+
+</body>
+</html>	
