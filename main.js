@@ -94,19 +94,6 @@ app.get('/main',function(req,res){
 
 
 /*학과 등록 창 - 기관 선택 링크 창 */
-/*app.get(['/register/choice','/register/dept/:id', '/register/dept'],function(req,res){
-	var sql='SELECT 기관ID, 기관이름 FROM 기관';
-	conn.query(sql,function(err,rows,fields){
-		var id = req.params.id;
-		if(id){
-			res.render('register_dept',{id});
-			console.log(id);
-		} else {
-			res.render('CenterChoice',{rows:rows});
-		}
-	});
-});*/
-
 app.get('/register/dept', function(req,res){
 	var sql='SELECT 기관ID, 기관이름 FROM 기관';
 	conn.query(sql,function(err,rows,fields){
@@ -118,7 +105,7 @@ app.get('/register/dept', function(req,res){
 
 
 /*기관(FK) 넘겨주고(req.params.id) DB에 insert*/
-app.post(['/register/dept','/register/dept/:id','/register/dept'],function(req,res){
+app.post('/register/dept',function(req,res){
 	var data={
 		"학과ID":req.body.did,
 		"학과이름":req.body.dname,
@@ -126,7 +113,6 @@ app.post(['/register/dept','/register/dept/:id','/register/dept'],function(req,r
 		"학과담당자":req.body.dmanager,
 		"이메일":req.body.demail,
 		"핸드폰번호":req.body.dphone,
-		// "기관ID":req.params.id
 		"기관ID":req.body.id
 	};
 
