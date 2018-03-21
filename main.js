@@ -154,28 +154,6 @@ app.get('/classList',function(req,res){
 
 
 /*class 영역*/
-/*app.get(['/register/choice2/:id','/register/choice2/:id/:dept'], function(req,res){
-	var sql = 'SELECT * FROM 학과 WHERE 기관ID=?';
-	conn.query(sql, function(err,results,fields){
-		var id = req.params.id;
-		if(id){
-			var sql = 'SELECT 학과ID, 학과이름, 기관ID FROM 학과';
-			conn.query(sql,[id],function(err,row,fields){
-				if(err){
-				console.log("err : "+err);
-				res.status(500).send('Internal Server Error444');
-				} else {
-				res.render('DeptChoice',{results:results, row:row[0]});
-				}
-			});
-		} else {
-			res.render('DeptChoice',{results:results});
-		}
-	});
-});*/
-
-
-
 app.get(['/register/choice2'],function(req,res){
 	var sql='SELECT 기관ID, 기관이름 FROM 기관';
 	conn.query(sql,function(err,rows,fields){
@@ -243,21 +221,6 @@ app.post('/register/choice2/:id/:dept',function(req,res){
 
 });
 
-
-/*개설과목 등록 페이지에서 강사ID 불러오기(select option)*/
-/*app.get('/register/choice2/:id/:dept',function(req,res){
-	var sql = 'SELECT * FROM 강사';
-	conn.query(sql, function(err,rows1,fields){
-		if(err){
-			console.log("err : "+err);
-			res.status(500).send('Interval Server Error : teacher ID request failed');
-		} else {
-			console.log(rows1);
-			res.render('register_class2',{rows1:rows1});
-		}
-	});
-});*/
-/*위의 코드와 겹쳐서 불가. 임시방편으로 option value를 수동으로 적기*/
 
 
 /*main페이지에서 삭제 기능*/
