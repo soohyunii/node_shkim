@@ -93,7 +93,7 @@ app.get('/main',function(req,res){
 
 
 
-/*학과 등록 창 - 기관 선택 링크 창 */
+/*학과 등록 창 - 기관 선택 select로 불러오기 */
 app.get('/register/dept', function(req,res){
 	var sql='SELECT 기관ID, 기관이름 FROM 기관';
 	conn.query(sql,function(err,rows,fields){
@@ -154,7 +154,7 @@ app.get('/classList',function(req,res){
 
 
 /*class 영역*/
-app.get(['/register/choice2'],function(req,res){
+/*app.get(['/register/choice2'],function(req,res){
 	var sql='SELECT 기관ID, 기관이름 FROM 기관';
 	conn.query(sql,function(err,rows,fields){
 		var id = req.params.id;
@@ -165,25 +165,30 @@ app.get(['/register/choice2'],function(req,res){
 			res.render('CenterChoice2',{rows:rows});
 		}
 	});
-});
+});*/
 
 /*기관선택, 학과선택*/
-app.get(['/register/choice2/:id','/register/choice2/:id/:dept'], function(req,res){
-	var sql = 'SELECT * FROM 학과 WHERE 기관ID='+ mysql.escape(req.params.id);
+app.get(['/register/choice2'], function(req,res){
+	var sql = 'SELECT 학과ID, 학과이름 FROM 학과';
 	var sql2 = 'SELECT 강사ID, 이름 FROM 강사';
+	/*---test---*/
+	var sql3 = 'SELECT 기관ID, 기관이름 FROM 기관';
+	/*d_sql은 sql이 대신하고 있음*/
 
 	conn.query(sql, function(err,rows,fields){
-		var dept = req.params.dept;
-		if(dept){
-			conn.query(sql2, function(err,rows2){
-				if(err) console.error("err : "+err);
-				res.render('register_class2',{dept, rows2:rows2});
-				console.log(dept, rows2);
-				/*deptID와 강사이름, ID를 불러온다*/
-			});
-			
+		if(err){
+			console.log(err);
 		} else {
-			res.render('DeptChoice',{rows:rows});
+			conn.query(sql2, function(err,rows2){
+			if(err) console.error("err : "+err);
+				{
+				conn.query(sql3,function(err,rows3){
+					if(err) console.error("err : "+err);
+					res.render('register_class2',{rows:rows, rows2:rows2, rows3:rows3});
+					console.log(rows, rows2, rows3);
+					})
+				}
+			});
 		}
 	});
 });
@@ -191,7 +196,7 @@ app.get(['/register/choice2/:id','/register/choice2/:id/:dept'], function(req,re
 
 
 /*개설 과목 등록*/
-app.post('/register/choice2/:id/:dept',function(req,res){
+app.post('/register/choice2',function(req,res){
 	var data = {
 		"과목ID":req.body.cid,
 		"과목차수":req.body.ctime,
@@ -202,7 +207,7 @@ app.post('/register/choice2/:id/:dept',function(req,res){
 		"현재개설여부":req.body.copen,
 		"과목현황":req.body.cstatus,
 		"과목명":req.body.cname,
-		"학과ID":req.params.dept,
+		"학과ID":req.body.second_select,	/*180322 수정*/
 		"등록여부":req.body.cregist
 	};
 	console.log(data);
@@ -215,7 +220,7 @@ app.post('/register/choice2/:id/:dept',function(req,res){
 		} else {
 			console.log("register success!!");
 			/*alert('등록이 완료되었습니다.');*/
-			res.render('success');
+			res.render('success_class');
 		}
 	});
 
