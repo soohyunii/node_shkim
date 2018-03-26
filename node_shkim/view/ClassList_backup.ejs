@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Class List</title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+</head>
+<style type="text/css">
+	#button1{
+		margin-left:20%;
+		margin-top: 5%;
+	}
+</style>
+<body>
+<aside class="sidebar">
+	<div id="welcome">
+		<h3>환영합니다!</h3>
+		<img src="/stylesheets/profile.jpg" width="100px">
+		<input type="button" id="logout" value="로그아웃" onClick="location.href='/register/center'"></input><p>	<!-- 라우팅 처리 안함 -->
+		<input type="button" id="mypage" value="마이페이지" onClick="location.href='/register/choice'"></input><p>	<!-- 라우팅 처리 안함 -->
+	</div>
+</aside>
+
+<article>
+
+	<table border='1'>
+		<caption><h1>개설과목 리스트</h1></caption>
+		<tr>
+			<td>과목ID</td>
+			<td>과목차수</td>
+			<td>강사ID</td>
+			<td>개설인원</td>
+			<td>강의시작일</td>
+			<td>강의종료일</td>
+			<td>현재개설여부</td>
+			<td>과목현황</td>
+			<td>과목명</td>
+			<td>학과ID</td>
+		</tr>
+
+		<% for(var i=0;i<rows.length;i++){
+		var cid = rows[i].과목ID;
+		var ctime = rows[i].과목차수;
+		var tid = rows[i].강사ID;
+		var cnumber = rows[i].개설인원;
+		var cstart = rows[i].강의시작일;
+		var dcstart = cstart.toDateString();
+		var cend = rows[i].강의종료일;
+		var dcend = cend.toDateString();
+		var copen = rows[i].현재개설여부;
+		var cstatus = rows[i].과목현황;
+		var cname = rows[i].과목명;
+		var did = rows[i].학과ID;
+		%>
+		<tr><td><%= cid %></td>
+			<td><%= ctime %></td>
+			<td><%= tid %></td>
+			<td><%= cnumber %></td>
+			<td><%= dcstart %></td>
+			<td><%= dcend %></td>
+			<td><%= copen %></td>
+			<td><%= cstatus %></td>
+			<td><%= cname %></td>
+			<td><%= did %></td>
+		</tr>
+	<% } %>
+</table>
+<p>
+<div id="button1">
+	<input type="button" id="register" value="등록 페이지" onClick="location.href='/register'"></input>
+	<input type="button" id="dept-register" value="기관 리스트 보기" onClick="location.href='/main'"></input>
+	<input type="button" id="class-register" value="학과 리스트 보기" onClick="location.href='/deptList'"></input>
+	<input type="button" value="메인으로" onClick="location.href='/main'"></input><p>
+	</input>
+</div>
+</article>
+
+</body>
+</html>	
+

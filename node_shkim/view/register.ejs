@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register List</title>
+    <link rel='stylesheet' href='stylesheets/simple.css'  />
+</head>
+<body>
+<aside class="sidebar">
+	<div id="welcome">
+		<h3>환영합니다!</h3>
+		<img src="/stylesheets/profile.jpg" width="100px">
+		<input type="button" id="logout" value="로그아웃" onClick="location.href='/register/center'"></input><p>	<!-- 라우팅 처리 안함 -->
+		<input type="button" id="mypage" value="마이페이지" onClick="location.href='/register/choice'"></input><p>	<!-- 라우팅 처리 안함 -->
+	</div>
+</aside>
+	
+<article>	
+	<h1>등록할 그룹을 선택하세요</h1>
+	<input type="button" id="centerRg" value="기관등록" onClick="location.href='/register/center'"></input><p>
+	<input type="button" id="deptRg" value="학과등록" onClick="location.href='/register/dept'"></input><p>
+	<input type="button" id="classRg" value="개설과목등록" onClick="location.href='/register/choice2'"></input><p>	
+	<input type="button" id="home" value="처음으로" onClick="location.href='/main'"></input>	
+</article>
+</body>
+</html>
