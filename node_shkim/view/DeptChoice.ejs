@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dept Choice</title>
+    <link rel='stylesheet' href='/stylesheets/simple.css'/>
+</head>
+
+<body>
+
+<aside class="sidebar">
+	<div id="welcome">
+		<h3>환영합니다!</h3>
+		<img src="/stylesheets/profile.jpg" width="100px">
+		<input type="button" id="logout" value="로그아웃" onClick="location.href='/register/center'"></input><p>	<!-- 라우팅 처리 안함 -->
+		<input type="button" id="mypage" value="마이페이지" onClick="location.href='/register/choice'"></input><p>	<!-- 라우팅 처리 안함 -->
+	</div>
+</aside>
+
+<article>
+<h1>학과를 선택하세요</h1>
+<form method="get" action="/register/choice2/:id">
+	<% for(var i=0;i<rows.length;i++){
+	var did = rows[i].학과ID;
+	var dname = rows[i].학과이름;
+	var id = rows[i].기관ID;
+	
+	%>
+<ul>
+	<li>
+		<a href = '/register/choice2/<%=id%>/<%=did%>'><%= dname %></a>
+	</li>
+</ul>
+	<% } %>
+</form>
+</article>
+
+</body>
+</html>

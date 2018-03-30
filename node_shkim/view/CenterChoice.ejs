@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Center Choice</title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+</head>
+<style type="text/css">
+	article{
+		margin-left:20%;
+		margin-top: 5%;
+	}
+</style>
+<body>
+<aside class="sidebar">
+	<div id="welcome">
+		<h3>환영합니다!</h3>
+		<img src="/stylesheets/profile.jpg" width="100px">
+		<input type="button" id="logout" value="로그아웃" onClick="location.href='/register/center'"></input><p>	<!-- 라우팅 처리 안함 -->
+		<input type="button" id="mypage" value="마이페이지" onClick="location.href='/register/choice'"></input><p>	<!-- 라우팅 처리 안함 -->
+	</div>
+</aside>
+
+
+<article>
+	<h1>기관을 선택하세요</h1>
+<form method="get" action="/register/choice">
+	<% for(var i=0;i<rows.length;i++){
+	var id = rows[i].기관ID;
+	var name = rows[i].기관이름;
+	%>
+<ul>
+	<li>
+		<a href = '/register/dept/<%= id %>'><%= name %></a>
+	</li>
+</ul>
+	<% } %>
+</form>
+</article>
+</body>
+</html>

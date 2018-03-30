@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register Dept</title>
+    <link rel='stylesheet' href='/stylesheets/simple.css'/>
+</head>
+
+<body>
+	
+<aside class="sidebar">
+	<div id="welcome">
+		<h3>환영합니다!</h3>
+		<img src="/stylesheets/profile.jpg" width="100px">
+		<input type="button" id="logout" value="로그아웃" onClick="location.href='/register/center'"></input><p>	<!-- 라우팅 처리 안함 -->
+		<input type="button" id="mypage" value="마이페이지" onClick="location.href='/register/choice'"></input><p>	<!-- 라우팅 처리 안함 -->
+	</div>
+</aside>
+
+<article>
+<h1>학과 세부정보 입력</h1>
+<!-- <form method="post" action="/register/dept/<%=id%>"> -->
+<form method="post" action="/register/dept">
+
+
+<select name="id">
+	<option value="">기관을 먼저 선택하세요</option>
+	<% for(var i=0;i<rows.length;i++){
+	var id = rows[i].기관ID;
+	var name = rows[i].기관이름;
+	%>
+	<option value="<%=id%>"><%=name%></option>
+	<% } %>
+</select><p>
+<div id="form-register">
+	<input type="text" name="did" placeholder="학과ID">
+</div>	
+	<p><input type="text" name="dname" placeholder="학과이름"></p>
+	<p><input type="text" name="dept" placeholder="분야"></p>
+	<p><input type="text" name="dmanager" placeholder="학과담당자"></p>
+	<p><input type="text" name="demail" placeholder="이메일"></p>
+	<p><input type="text" name="dphone" placeholder="핸드폰번호"></p>
+	<input type='submit'>
+</form>
+
+</article>
+</body>
+</html>	
+
+	

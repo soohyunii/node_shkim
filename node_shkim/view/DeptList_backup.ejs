@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dept List</title>
+    <link rel='stylesheet' href='stylesheets/style.css'  />
+</head>
+<style type="text/css">
+	#button1{
+		margin-left:12%;
+		margin-top: 5%;
+	}
+</style>
+<body>
+<aside class="sidebar">
+	<div id="welcome">
+		<h3>환영합니다!</h3>
+		<input type="button" id="logout" value="로그아웃" onClick="location.href='/register/center'"></input><p>	<!-- 라우팅 처리 안함 -->
+		<input type="button" id="mypage" value="마이페이지" onClick="location.href='/register/choice'"></input><p>	<!-- 라우팅 처리 안함 -->
+	</div>
+</aside>
+
+<article>
+	<table border='1'>
+		<caption><h1>학과 리스트</h1></caption>
+		<tr>
+			<td>ID</td>
+			<td>학과이름</td>
+			<td>분야</td>
+			<td>학과담당자</td>
+			<td>이메일</td>
+			<td>핸드폰번호</td>
+			<td>기관ID</td>
+		</tr>
+
+		<% for(var i=0;i<rows.length;i++){
+		var did = rows[i].학과ID;
+		var dname = rows[i].학과이름;
+		var dept = rows[i].분야;
+		var dmanager = rows[i].학과담당자;
+		var demail = rows[i].이메일;
+		var dphone = rows[i].핸드폰번호;
+		var id = rows[i].기관ID;
+		%>
+		<tr><td><%= did %></td>
+			<td><%= dname %></td>
+			<td><%= dept %></td>
+			<td><%= dmanager %></td>
+			<td><%= demail %></td>
+			<td><%= dphone %></td>
+			<td><%= id %></td>
+		</tr>
+	<% } %>
+</table>
+<p>
+<div id="button1">
+	<input type="button" id="register" value="등록 페이지" onClick="location.href='/register'"></input>
+	<input type="button" id="dept-register" value="기관 리스트 보기" onClick="location.href='/main'"></input>
+	<input type="button" id="class-register" value="개설과목 리스트 보기" onClick="location.href='/classList'"></input>
+	<input type="button" value="메인으로" onClick="location.href='/main'"></input><p>
+	</input>
+</div>
+</article>
+</body>
+</html>	
+
