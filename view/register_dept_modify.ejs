@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Register Center</title>
+    <title>Register Modify Dept</title>
     <link rel='stylesheet' href='stylesheets/simple.css'  />
 </head>
 <style type="text/css">
@@ -69,21 +69,21 @@
 
 <article>
 	<% for(var i=0;i<rows.length;i++){
+			var did = rows[i].학과ID;
+			var dname = rows[i].학과이름;
 			var id = rows[i].기관ID;
-			var name = rows[i].기관이름;
 		%>
-	<h1> <%=name%> 세부정보 수정</h1>
-	<form action='/modify/success/<%=id%>' method="post"> 
+	<h1> <%=dname%> 세부정보 수정</h1>
+	<form action='/modifyDept/success/<%=did%>/<%=id%>' method="post"> 
 		
 
-		<input type='text' name='id' placeholder="기관ID : <%=id%> (수정불가)" readonly><p>
-		<input type='text' name='password' placeholder="PASSWORD" required><p>
-		<input type='text' name='centername' placeholder="기관명" required><p>
-		<input type='text' name='name' placeholder="기관이름" required><p>
-		<input type='text' name='address' placeholder="주소" required><p>
-		<input type='text' name='manager' placeholder="기관담당자" required><p>
-		<input type='text' name='email' placeholder="이메일" required><p>
-		<input type='text' name='phone' placeholder="핸드폰번호" required><p>	
+		<input type='text' name='did' placeholder="학과ID : <%=did%> (수정불가)" readonly><p>
+		<input type='text' name='dname' placeholder="학과이름" required><p>
+		<input type='text' name='dept' placeholder="분야" required><p>
+		<input type='text' name='dmanager' placeholder="학과담당자" required><p>
+		<input type='text' name='demail' placeholder="이메일" required><p>
+		<input type='text' name='dphone' placeholder="핸드폰번호" required><p>
+		<input type='text' name='id' placeholder="기관ID : <%=id%> (수정불가)" readonly><p>	
 		<input type='submit'>
 
 		<% } %>

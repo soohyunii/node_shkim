@@ -14,26 +14,28 @@
 <aside class="sidebar">
 	<div id="welcome">
 		<h3>환영합니다!</h3>
+		<img src="/stylesheets/profile.jpg" width="100px">
 		<input type="button" id="logout" value="로그아웃" onClick="location.href='/register/center'"></input><p>	<!-- 라우팅 처리 안함 -->
 		<input type="button" id="mypage" value="마이페이지" onClick="location.href='/register/choice'"></input><p>	<!-- 라우팅 처리 안함 -->
 	</div>
 </aside>
 
 <article>
-
-	<table border='1'>
-		<caption><h1>개설과목 리스트</h1></caption>
+<div id="title_center"><caption><h1>개설과목 리스트</h1></caption></div>
+	<table border="0" id="class" cellpadding="5px" style="border-collapse:collapse;">
+		
 		<tr>
-			<td>과목ID</td>
-			<td>과목차수</td>
-			<td>강사ID</td>
-			<td>개설인원</td>
-			<td>강의시작일</td>
-			<td>강의종료일</td>
-			<td>현재개설여부</td>
-			<td>과목현황</td>
-			<td>과목명</td>
-			<td>학과ID</td>
+			<th>과목ID</th>
+			<th>과목차수</th>
+			<th>강사ID</th>
+			<th>개설인원</th>
+			<th>강의시작일</th>
+			<th>강의종료일</th>
+			<th>현재개설여부</th>
+			<th>과목현황</th>
+			<th>과목명</th>
+			<th>학과ID</th>
+			<th></th>
 		</tr>
 
 		<% for(var i=0;i<rows.length;i++){
@@ -60,16 +62,20 @@
 			<td><%= cstatus %></td>
 			<td><%= cname %></td>
 			<td><%= did %></td>
+			<td>
+				<div id="modify_drop">
+				<input type="button" id="modifyButton" value="수정" onClick="location.href='/modifyClass/<%= cid%>/<%=did%>'">	
+				<input type="button" id="removeButton" value="삭제" onClick="location.href='/removeClass/<%= cid%>'">
+				</div>
+		</td>	
 		</tr>
 	<% } %>
 </table>
 <p>
-<div id="button1">
-	<input type="button" id="register" value="등록 페이지" onClick="location.href='/register'"></input>
+<div id="button_class">
+	<input type="button" id="main" value="홈으로" onClick="location.href='/main'"></input>
 	<input type="button" id="dept-register" value="기관 리스트 보기" onClick="location.href='/main'"></input>
 	<input type="button" id="class-register" value="학과 리스트 보기" onClick="location.href='/deptList'"></input>
-	<input type="button" value="메인으로" onClick="location.href='/main'"></input><p>
-	</input>
 </div>
 </article>
 

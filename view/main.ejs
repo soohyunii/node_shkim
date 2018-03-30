@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Main Page</title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+</head>
+<body>
+<aside class="sidebar">
+	<div id="welcome">
+		<h3>환영합니다!</h3>
+		<img src="/stylesheets/profile.jpg" width="100px">
+		<input type="button" id="logout" value="로그아웃" onClick="location.href='/register/center'"></input><p>	<!-- 라우팅 처리 안함 -->
+		<input type="button" id="mypage" value="마이페이지" onClick="location.href='/register/choice'"></input><p>	<!-- 라우팅 처리 안함 -->
+	</div>
+</aside>
+
+<article>
+	<div id="list_group">
+		<div id="dolist">
+			<h1>리스트보기</h1>
+		</div>
+		<div class="list_link">	
+			<p>
+				<div class="eff-1">	
+				<a href="/main1">기관리스트</a><!-- 나중에 링크 경로 바꾸기 -->
+				</div>
+			</p>
+			<p>
+				<div class="eff-1">	
+				<a href="/deptList">학과리스트</a>
+				</div>
+			</p>
+			<p>
+				<div class="eff-1">	
+				<a href="/classList">개설과목 리스트</a>
+				</div>	
+			</p>
+
+		</div>		 
+	</div>	
+	
+	<div id="register_group">
+		<div id="doRegister">
+			<h1>등록하기</h1>
+		</div>
+		<div class="register_link">
+			<p>
+				<div class="eff-1">
+				<a href="/register/center">기관 등록</a>
+				</div>
+			</p>
+			<p>
+				<div class="eff-1">
+				<a href="/register/dept">학과 등록</a>
+				</div>
+			</p>
+			<p>
+				<div class="eff-1">
+				<a href="/register/choice2">개설과목 등록</a>
+				</div>
+			</p>
+		</div>
+	</div>	
+</article>		
+</body>
+</html>	

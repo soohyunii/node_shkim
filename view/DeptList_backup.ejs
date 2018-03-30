@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Dept List</title>
+    <title>Dept List222</title>
     <link rel='stylesheet' href='stylesheets/style.css'  />
 </head>
 <style type="text/css">
@@ -14,22 +14,24 @@
 <aside class="sidebar">
 	<div id="welcome">
 		<h3>환영합니다!</h3>
+		<img src="/stylesheets/profile.jpg" width="100px">
 		<input type="button" id="logout" value="로그아웃" onClick="location.href='/register/center'"></input><p>	<!-- 라우팅 처리 안함 -->
 		<input type="button" id="mypage" value="마이페이지" onClick="location.href='/register/choice'"></input><p>	<!-- 라우팅 처리 안함 -->
 	</div>
 </aside>
 
 <article>
-	<table border='1'>
-		<caption><h1>학과 리스트</h1></caption>
+	<div id="title_center"><caption><h1>학과 리스트</h1></caption></div>
+	<table border="0" id="dept" cellpadding="3px" style="border-collapse:collapse;" >
 		<tr>
-			<td>ID</td>
-			<td>학과이름</td>
-			<td>분야</td>
-			<td>학과담당자</td>
-			<td>이메일</td>
-			<td>핸드폰번호</td>
-			<td>기관ID</td>
+			<th>ID</th>
+			<th>학과이름</th>
+			<th>분야</th>
+			<th>학과담당자</th>
+			<th>이메일</th>
+			<th>핸드폰번호</th>
+			<th>기관ID</th>
+			<th> </th>
 		</tr>
 
 		<% for(var i=0;i<rows.length;i++){
@@ -48,16 +50,20 @@
 			<td><%= demail %></td>
 			<td><%= dphone %></td>
 			<td><%= id %></td>
+			<td>
+			<div id="modify_drop">
+			<input type="button" id="modifyButton" value="수정" onClick="location.href='/modifyDept/<%= did%>/<%=id%>'">	
+			<input type="button" id="removeButton" value="삭제" onClick="location.href='/removeDept/<%= did%>'">
+			</div>
+		</td>	
 		</tr>
 	<% } %>
 </table>
 <p>
-<div id="button1">
-	<input type="button" id="register" value="등록 페이지" onClick="location.href='/register'"></input>
-	<input type="button" id="dept-register" value="기관 리스트 보기" onClick="location.href='/main'"></input>
+<div id="button_dept">
+	<input type="button" id="main" value="홈으로" onClick="location.href='/main'"></input>
+	<input type="button" id="dept-register" value="기관 리스트 보기" onClick="location.href='/main1'"></input>
 	<input type="button" id="class-register" value="개설과목 리스트 보기" onClick="location.href='/classList'"></input>
-	<input type="button" value="메인으로" onClick="location.href='/main'"></input><p>
-	</input>
 </div>
 </article>
 </body>

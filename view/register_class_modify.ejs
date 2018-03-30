@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register Modify Class</title>
+    <link rel='stylesheet' href='stylesheets/simple.css'  />
+</head>
+<style type="text/css">
+	body {
+		background: #F6F6F6;
+		margin: 0px;
+		height: 100%;
+	}	
+	aside {
+		background: #8A8A8A;
+		float: left;
+		width: 15%;
+		height: 1013px;
+	}
+
+	#welcome{
+		margin: 27%;
+		text-align: center;	
+		font-size: 1em;
+		padding-top: 10%;
+	}
+
+	#welcome img{
+		text-align: center;	
+		padding-top: 40px;
+	}
+
+	article{
+		float: right;
+		width: 70%;
+		margin-left: 10%;
+		margin-top: 6%;
+	}
+
+	#button{
+		margin-left: 27%;
+		margin-top: 7%; 
+
+	}
+
+	#logout{
+		margin-top: 90px;
+	}
+
+	input{
+		margin-bottom: 10px;
+	}
+
+	h1{
+		margin-bottom: 40px;
+	}
+
+
+	
+</style>
+<body>
+<aside class="sidebar">
+	<div id="welcome">
+		<h3>환영합니다!</h3>
+		<img src="/stylesheets/profile.jpg" width="100px">
+		<input type="button" id="logout" value="로그아웃" onClick="location.href='/register/center'"></input><p>	<!-- 라우팅 처리 안함 -->
+		<input type="button" id="mypage" value="마이페이지" onClick="location.href='/register/choice'"></input><p>	<!-- 라우팅 처리 안함 -->
+	</div>
+</aside>
+
+<article>
+	<% for(var i=0;i<rows.length;i++){
+			var cid = rows[i].과목ID;
+			var cname = rows[i].과목명;
+			var did = rows[i].학과ID;
+		%>
+	<h1> <%=cname%> 세부정보 수정</h1>
+	<form action='/modifyClass/success/<%=cid%>/<%=did%>' method="post"> 
+		
+
+		<input type='text' name='cid' placeholder="과목ID : <%=cid%> (수정불가)" readonly><p>
+		<input type='text' name='ctime' placeholder="과목차수" required><p>
+			<select name="tid">
+				<option value="">강사선택</option>
+				<% for(var i=0;i<rows2.length;i++){
+				var tid = rows2[i].강사ID;
+				var tname = rows2[i].이름;
+				%>
+				<option value="<%=tid%>"><%=tname%> (<%=tid%>)</option>
+				<% } %>
+			</select>
+			<p>
+		<input type='text' name='cnumber' placeholder="개설인원" required><p>
+		<input type='date' name='cstart' placeholder="강의시작일" required><p>
+		<input type='date' name='cend' placeholder="강의종료일" required><p>
+		<input type='text' name='copen' placeholder="현재개설여부" required><p>
+		<input type='text' name='cstatus' placeholder="과목현황" required><p>
+		<input type='text' name='cname' placeholder="과목명" required><p>
+		<input type='text' name='did' placeholder="학과ID : <%=did%> (수정불가)" readonly><p>
+		<input type='text' name='cregist' placeholder="등록여부" required><p>	
+		<input type='submit'>
+
+		<% } %>
+
+
+	</form>
+</article>		
+</body>
+</html>

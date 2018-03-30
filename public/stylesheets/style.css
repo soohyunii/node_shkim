@@ -6,7 +6,7 @@
 	aside {
 		background: #8A8A8A;
 		float: left;
-		width: 13%;
+		width: 15%;
 		height: 1013px;
 	}
 
@@ -14,22 +14,38 @@
 		margin: 27%;
 		text-align: center;	
 		font-size: 1em;
+		padding-top: 10%;
+	}
+
+	#welcome img{
+		text-align: center;	
+		padding-top: 40px;
 	}
 
 	article{
-		float: left;
-		width: 65%;
-		margin-left: 10%;
-		margin-top: 5%;
+		float: right;
+		width: 80%;
+		margin-left: 2%;
+		margin-top: 3%;
 	}
 
 	#button{
-		margin-left: 25%;
-		margin-top: 5%; 
+		margin-left: 27%;
+		margin-top: 7%; 
 
 	}
 
-	#register{
+	#button_dept{
+		margin-left: 27%;
+		margin-top: 3%; 		
+	}
+
+	#button_class{
+		margin-left: 27%;
+		margin-top: 3%; 		
+	}
+
+	#main{
 		margin-right: 10%;
 	}
 
@@ -43,4 +59,103 @@
 
 	table{
 		margin-left:15%;
+	}
+
+	#logout{
+		margin-top: 90px;
+		margin-bottom: 10px;
+	}
+
+
+	#list_group{
+		float:left;
+		width:25%;
+		margin-left: 15%;
+		margin-top: 6%;
+		text-align:center;
+
+	}
+
+	#dolist{
+		border-bottom:solid 3px rgb(57,98,116);
+
+	}
+
+	.list_link{
+		line-height:5.0em
+
+	}
+
+
+	.list_link a{
+		font-family:arial;
+	    color:black;
+	    text-decoration:none;
+	}
+
+	#register_group{
+		float:right;
+		width:25%;
+		margin-right: 25%;
+		margin-top: 6%;
+		text-align:center;
+	}
+
+	#doRegister{
+		border-bottom:solid 3px rgb(57,98,116);
+	}
+
+	.register_link{
+		line-height:5.0em
+	}
+
+	.register_link a{
+		font-family:arial;
+	    color:black;
+	    text-decoration:none;
+	}
+
+
+	.eff-1:hover a{
+	 	color:#34495e;
+	 	font-weight: bolder;
+	 	font-style: italic;
+	}
+
+	#center{
+		text-align: center;
+		width:70%;
+		margin-left: 12%;
+		margin-top: 5%;
+	}
+
+	table th {
+		font-weight: bold;
+		border-bottom: 2px solid #34495e;
+	}
+
+	table td {
+		border-bottom: 1px solid black;
+
+	}
+
+
+	#title_center {
+		width:90%;
+		text-align: center;
+	}
+
+
+	#dept{
+		text-align: center;
+		width:70%;
+		margin-left: 12%;
+		margin-top: 2%;
+	}
+
+	#class{
+		text-align: center;
+		width:70%;
+		margin-left: 10%;
+		margin-top: 2%;
 	}

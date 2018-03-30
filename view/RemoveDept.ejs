@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Remove</title>
+    <title>Remove22</title>
     <link rel='stylesheet' href='/stylesheets/simple.css'/>
 </head>
 <body>
@@ -15,22 +15,20 @@
 </aside>
 
 <article>
-	<!-- <form method="post" action="/remove/success"> -->
 	
 	<% for(var i=0;i<rows.length;i++){
-	var id = rows[i].기관ID;
-	var name = rows[i].기관이름;
+	var did = rows[i].학과ID;
+	var dname = rows[i].학과이름;
 	%>
 	
-	<tr><td><h2>ID <%= id %>, <%=name%>를</h2></td>
+	<tr><td><h2>ID <%= did %>, <%=dname%>를</h2></td>
 
 	</tr>	
 
 	<h2> 정말 삭제하시겠습니까? </h2>
 
-	<button type='submit' onClick="location.href='/remove/success/<%=id%>'">네 삭제하겠습니다</button>
-	<!-- <button type='submit' onClick="/remove/:id">네 삭제하겠습니다</button> -->
-	<button type="submit" onClick="location.href='/main1'">아니오, 취소합니다</button>
+	<button type='submit' onClick="location.href='/removeDept/success/<%=did%>'">네 삭제하겠습니다</button>
+	<button type="submit" onClick="location.href='/deptList'">아니오, 취소합니다</button>
 
 	<% } %>
 

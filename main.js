@@ -14,6 +14,7 @@ var conn = mysql.createConnection({
 	database : 'unidata'
 });
 
+var flash = require('connect-flash');
 
 var jayson =  require('jayson');
 /*routes 파일의 index.js를 사용할 수 있는 코드 - 현재는 보류*/
@@ -81,8 +82,12 @@ app.post('/register/center', function(req,res){
 /*success페이지 이후 list또는 register로 rendering*/	
 
 
-/*기관 : mysql의 목록 출력*/
 app.get('/main',function(req,res){
+	res.render('main');
+});
+
+/*기관 : mysql의 목록 출력*/
+app.get('/main1',function(req,res){
 	var sql='SELECT * FROM 기관';
 	conn.query(sql,function(err,rows,fields){
 		if(err) console.log("err :"+err);
@@ -152,28 +157,25 @@ app.get('/classList',function(req,res){
 
 
 
-
-/*class 영역*/
-/*app.get(['/register/choice2'],function(req,res){
+/*개설과목 등록 시 기관선택*/
+app.get(['/register/choice2'],function(req,res){
 	var sql='SELECT 기관ID, 기관이름 FROM 기관';
 	conn.query(sql,function(err,rows,fields){
 		var id = req.params.id;
 		if(id){
-			res.render('DeptChoice',{id});
+			res.render('register_class2',{id});
 			console.log(id);
 		} else {
 			res.render('CenterChoice2',{rows:rows});
 		}
 	});
-});*/
+});
 
-/*기관선택, 학과선택*/
-app.get(['/register/choice2'], function(req,res){
-	var sql = 'SELECT 학과ID, 학과이름 FROM 학과';
+/*개설과목 등록 시 필요한 리스트 : 학과선택, 강사선택 등*/
+app.get(['/register/choice2/:id'], function(req,res){
+	var sql = 'SELECT 학과ID, 학과이름 FROM 학과 WHERE 기관ID='+mysql.escape(req.params.id);;
 	var sql2 = 'SELECT 강사ID, 이름 FROM 강사';
 	/*---test---*/
-	var sql3 = 'SELECT 기관ID, 기관이름 FROM 기관';
-	/*d_sql은 sql이 대신하고 있음*/
 
 	conn.query(sql, function(err,rows,fields){
 		if(err){
@@ -181,13 +183,8 @@ app.get(['/register/choice2'], function(req,res){
 		} else {
 			conn.query(sql2, function(err,rows2){
 			if(err) console.error("err : "+err);
-				{
-				conn.query(sql3,function(err,rows3){
-					if(err) console.error("err : "+err);
-					res.render('register_class2',{rows:rows, rows2:rows2, rows3:rows3});
-					console.log(rows, rows2, rows3);
-					})
-				}
+				res.render('register_class2',{rows:rows, rows2:rows2});
+				console.log(rows, rows2);
 			});
 		}
 	});
@@ -196,7 +193,7 @@ app.get(['/register/choice2'], function(req,res){
 
 
 /*개설 과목 등록*/
-app.post('/register/choice2',function(req,res){
+app.post('/register/choice2/:id',function(req,res){
 	var data = {
 		"과목ID":req.body.cid,
 		"과목차수":req.body.ctime,
@@ -219,7 +216,6 @@ app.post('/register/choice2',function(req,res){
 			res.status(500).send('Interval Server Error : insert');
 		} else {
 			console.log("register success!!");
-			/*alert('등록이 완료되었습니다.');*/
 			res.render('success_class');
 		}
 	});
@@ -228,8 +224,8 @@ app.post('/register/choice2',function(req,res){
 
 
 
-/*main페이지에서 삭제 기능*/
-app.get('/remove/:id',function(req,res){
+/*기관 삭제 페이지*/
+app.get('/remove/success/:id',function(req,res){
 	var id = req.params.id;
 	var sql = 'DELETE FROM 기관 WHERE 기관ID ='+ mysql.escape(req.params.id);
 	console.log(mysql.escape(req.params.id));
@@ -239,10 +235,19 @@ app.get('/remove/:id',function(req,res){
 		res.redirect('/main');
 	});
 });
-/*예고없이 삭제됨 : 삭제 onClick="location.href='/remove/<%= id%>'" 때문*/
+
+app.get('/remove/:id', function(req,res){
+	var id = req.params.id;
+	var sql='SELECT 기관ID, 기관이름 FROM 기관 WHERE 기관ID ='+ mysql.escape(req.params.id);
+	conn.query(sql,[id],function(err,rows){
+		if(err) console.log(err);
+		console.log(rows);
+		res.render('Remove',{rows:rows});
+	});
+});
 
 
-/*main 페이지에서 수정 기능*/
+/*main 페이지에서 수정 기능 - 기관 수정 */
 app.get('/modify/:id',function(req,res){
 	var id = req.params.id;
 	var sql='SELECT * FROM 기관 WHERE 기관ID='+mysql.escape(req.params.id);
@@ -254,6 +259,144 @@ app.get('/modify/:id',function(req,res){
 	});
 });
 
+/*update 구문 - 기관 수정 페이지*/
+app.post('/modify/success/:id',function(req,res){
+	var id = req.params.id;
+	var password = req.body.password;
+	var centername = req.body.centername;
+	var name = req.body.name;
+	var address = req.body.address;
+	var manager = req.body.manager;
+	var email = req.body.email;
+	var phone = req.body.phone;
+	var sql = 'UPDATE 기관 SET PASSWORD=?,기관명=?,기관이름=?,주소=?,기관담당자=?,이메일=?,핸드폰번호=? WHERE 기관ID = '+mysql.escape(req.params.id);
+	conn.query(sql,[password,centername,name,address,manager,email,phone,id],function(err,rows){
+		if(err) console.log("err : "+err);
+		console.log(rows);
+		res.render('success_center',{rows:rows});
+	});
+});
+
+
+/*main 페이지에서 수정 기능 - 학과 수정 */
+app.get('/modifyDept/:did/:id',function(req,res){
+	var id = req.params.id;
+	var did = req.params.did;
+	var sql='SELECT * FROM 학과 WHERE 학과ID='+mysql.escape(req.params.did);
+	console.log(mysql.escape(req.params.did));
+	conn.query(sql,[did],function(err,rows){
+		if(err) console.log("err : "+err);
+		console.log(rows);
+		res.render('register_dept_modify',{rows:rows});
+	});
+});
+
+
+/*update 구문 - 학과 수정 페이지*/
+app.post('/modifyDept/success/:did/:id',function(req,res){
+	var did = req.params.did;
+	var dname = req.body.dname;
+	var dept = req.body.dept;
+	var dmanager = req.body.dmanager;
+	var demail = req.body.demail;
+	var dphone = req.body.dphone;
+	var id = req.params.id;
+	var sql = 'UPDATE 학과 SET 학과이름=?,분야=?,학과담당자=?,이메일=?,핸드폰번호=?, 기관ID=? WHERE 학과ID = '+mysql.escape(req.params.did);
+	conn.query(sql,[dname,dept,dmanager,demail,dphone,id,did],function(err,rows){
+		if(err) console.log("err : "+err);
+		console.log(rows);
+		res.render('success_dept',{rows:rows});
+	});
+});
+
+
+/*학과 삭제 페이지*/
+app.get('/removeDept/success/:did',function(req,res){
+	var did = req.params.did;
+	var sql = 'DELETE FROM 학과 WHERE 학과ID ='+ mysql.escape(req.params.did);
+	console.log(mysql.escape(req.params.did));
+	conn.query(sql,[did],function(err,results){
+		if(err) console.log("err :"+err);
+		console.log(results.affectedRows);
+		res.redirect('/deptList');
+	});
+});
+
+app.get('/removeDept/:did', function(req,res){
+	var did = req.params.did;
+	var sql='SELECT 학과ID, 학과이름 FROM 학과 WHERE 학과ID ='+ mysql.escape(req.params.did);
+	conn.query(sql,[did],function(err,rows){
+		if(err) console.log(err);
+		console.log(rows);
+		res.render('RemoveDept',{rows:rows});
+	});
+});
+
+
+
+/*main 페이지에서 수정 기능 - 개설과목 수정 */
+app.get('/modifyClass/:cid/:did',function(req,res){
+	var cid = req.params.cid;
+	var did = req.params.did;
+	var sql='SELECT * FROM 개설과목 WHERE 과목ID='+mysql.escape(req.params.cid);
+	var sql2='SELECT 강사ID, 이름 FROM 강사';
+	console.log(mysql.escape(req.params.cid));
+	conn.query(sql,[cid],function(err,rows){
+		if(err) console.log("err : "+err);
+		{
+			conn.query(sql2,function(err,rows2){
+				if(err) console.log("err : "+err);
+				res.render('register_class_modify',{rows:rows, rows2:rows2});
+				console.log(rows, rows2);
+			});
+		}
+	});
+});
+
+
+/*update 구문 - 개설과목 수정 페이지*/
+app.post('/modifyClass/success/:cid/:did',function(req,res){
+	var cid = req.params.cid;
+	var ctime = req.body.ctime;
+	var tid = req.body.tid;
+	var cnumber = req.body.cnumber;
+	var cstart = req.body.cstart;
+	var cend = req.body.cend;
+	var copen = req.body.copen;
+	var cstatus = req.body.cstatus;
+	var cname = req.body.cname;
+	var did = req.params.did;
+	var cregist = req.body.cregist;
+	var sql = 'UPDATE 개설과목 SET 과목차수=?,강사ID=?,개설인원=?,강의시작일=?,강의종료일=?, 현재개설여부=?, 과목현황=?, 과목명=?, 학과ID=?, 등록여부=? WHERE 과목ID = '+mysql.escape(req.params.cid);
+	conn.query(sql,[ctime,tid,cnumber,cstart,cend,copen,cstatus,cname,did,cregist,cid],function(err,rows){
+		if(err) console.log("err : "+err);
+		console.log(rows);
+		res.render('success_class',{rows:rows});
+	});
+});
+
+
+/*개설과목 삭제 페이지*/
+app.get('/removeClass/success/:cid',function(req,res){
+	var cid = req.params.cid;
+	var sql = 'DELETE FROM 개설과목 WHERE 과목ID ='+ mysql.escape(req.params.cid);
+	console.log(mysql.escape(req.params.cid));
+	conn.query(sql,[cid],function(err,results){
+		if(err) console.log("err :"+err);
+		console.log(results.affectedRows);
+		res.redirect('/classList');
+	});
+});
+
+app.get('/removeClass/:cid', function(req,res){
+	var cid = req.params.cid;
+	var sql='SELECT 과목ID, 과목명 FROM 개설과목 WHERE 과목ID ='+ mysql.escape(req.params.cid);
+	conn.query(sql,[cid],function(err,rows){
+		if(err) console.log(err);
+		console.log(rows);
+		res.render('RemoveClass',{rows:rows});
+	});
+});
 
 
 

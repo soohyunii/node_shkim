@@ -1,0 +1,193 @@
+/*class 영역*/
+app.get(['/register/choice2'],function(req,res){
+	var sql='SELECT 기관ID, 기관이름 FROM 기관';
+	conn.query(sql,function(err,rows,fields){
+		var id = req.params.id;
+		if(id){
+			res.render('DeptChoice',{id});
+			console.log(id);
+		} else {
+			res.render('CenterChoice2',{rows:rows});
+		}
+	});
+});
+
+/*기관선택, 학과선택*/
+app.get(['/register/choice2/:id','/register/choice2/:id/:dept'], function(req,res){
+	var sql = 'SELECT * FROM 학과 WHERE 기관ID='+ mysql.escape(req.params.id);
+	var sql2 = 'SELECT 강사ID, 이름 FROM 강사';
+
+	conn.query(sql, function(err,rows,fields){
+		var dept = req.params.dept;
+		if(dept){
+			conn.query(sql2, function(err,rows2){
+				if(err) console.error("err : "+err);
+				res.render('register_class2',{dept, rows2:rows2});
+				console.log(dept, rows2);
+				/*deptID와 강사이름, ID를 불러온다*/
+			});
+			
+		} else {
+			res.render('DeptChoice',{rows:rows});
+		}
+	});
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register Class</title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+</head>
+<body>
+
+<aside class="sidebar">
+	<div id="welcome">
+		<h3>환영합니다!</h3>
+		<img src="/stylesheets/profile.jpg" width="100px">
+		<input type="button" id="logout" value="로그아웃" onClick="location.href='/register/center'"></input><p>	<!-- 라우팅 처리 안함 -->
+		<input type="button" id="mypage" value="마이페이지" onClick="location.href='/register/choice'"></input><p>	<!-- 라우팅 처리 안함 -->
+	</div>
+</aside>
+
+<article>
+		
+
+
+	<h1>개설과목 세부정보 입력</h1>
+	
+	<form  name="form" method="post" action="/register/choice2">
+
+	<script type="text/javascript">
+		var mysql=require('mysql');
+		var bodyParser=require('body-parser');
+		var conn = mysql.createConnection({
+			host : '192.168.0.50',
+			user : 'root',
+			password : 'gri1234',
+			database : 'unidata'
+		});
+
+		conn.connect();
+
+		app.set('views','./view');
+		app.set('view engine','ejs');
+
+
+		function(){
+			var first = document.getElementById('first_select');
+			var second = document.getElementById('second_select');
+			/******************************************************/
+			app.get('/register/choice2',function(req,res){
+				var first_sql = 'SELECT 학과ID, 학과이름 FROM 학과 WHERE 기관ID='+first;
+
+				conn.query(first_sql, function(err,rows,fields){
+					if(err){
+						alert("err");
+						console.log(err);
+					} else {
+						console.log(rows);
+						var cameras = {[rows]};
+					}
+				})
+
+			})			
+
+
+			var cameras = {
+				bolex: 'Bolex Paillard H8',
+    			yashica: 'Yashica 30',
+    			pathescape: 'Pathescape Super-8 Relax',
+    			canon: 'Canon 512'
+			};
+			/******************************************************/
+
+			addEvent(first,'change',function(){
+				if(this.value === ""){
+					second.innerHTML = '<option>기관을 먼저 선택하세요</option>';
+					return;
+				}
+				var second_select = getSecondList(this.value);
+
+				var options = '<option>학과를 선택해주세요</option>';
+				var key;
+				for(key in second_select){
+					options += '<option value="'+key+'">'+second_select[key]+'</option>';
+				}
+				second.innerHTML = options;
+			});
+			function getSecondList(first_select){
+				/********************************/
+				if(first_select === 'cameras') {
+					return cameras;
+				}
+				/*********************************/
+			}
+		}
+
+	</script>	
+	
+	<select id="first_select" name="first_select">
+		<option value="">기관을 먼저 선택하세요</option>
+		<% for(var i=0;i<rows3.length;i++){
+			var id = rows3[i].기관ID;
+			var name = rows3[i].기관이름;
+		%>
+		<option value="<%=id%>"><%=name%></option>	
+		<% } %>
+	</select>
+	<p>
+	<select id="second_select" name="second_select">
+		<option value="">기관선택 후 학과를 선택하세요</option>
+		<% for(var i=0;i<rows.length;i++){
+			var did = rows[i].학과ID;
+			var dname = rows[i].학과이름;
+		%>
+		<option value="<%=did%>"><%=dname%></option>	
+		<% } %>
+	</select>
+
+	<p><input type="text" name="cid" placeholder="과목ID" required></p>
+	<p><input type="text" name="ctime" placeholder="과목차수" required></p>
+	<select name="tid">
+		<option value="">강사선택</option>
+		<% for(var i=0;i<rows2.length;i++){
+		var tid = rows2[i].강사ID;
+		var tname = rows2[i].이름;
+		%>
+		<option value="<%=tid%>"><%=tname%> (<%=tid%>)</option>
+		<% } %>
+	</select>
+	<p><input type="text" name="cnumber" placeholder="개설인원" required></p>
+	<p><input type="date" name="cstart" placeholder="강의시작일" required></p>
+	<p><input type="date" name="cend" placeholder="강의종료일" required></p>
+	<p><input type="text" name="copen" placeholder="현재개설여부" required></p>
+	<p><input type="text" name="cstatus" placeholder="과목현황" required></p>
+	<p><input type="text" name="cname" placeholder="과목명" required></p>
+	<p><input type="text" name="cregist" placeholder="등록여부" required></p>
+	<p><input type="submit">
+
+	
+
+	</form>
+</article>
+
+</body>
+</html>	
